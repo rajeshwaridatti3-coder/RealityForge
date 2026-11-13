@@ -1,0 +1,12 @@
+services:
+ api:
+  build: ./backend
+  ports: ["8000:8000"]
+  environment:
+   DATA_DIR: /data
+   DATABASE_URL: sqlite:////data/realityforge.db
+   CORS_ORIGINS: http://localhost:5173
+   ENABLE_AI: "false"
+  volumes: [realityforge_data:/data]
+volumes:
+ realityforge_data:

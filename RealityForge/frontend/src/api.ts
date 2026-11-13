@@ -1,0 +1,3 @@
+const B=(import.meta.env.VITE_API_BASE_URL||'http://127.0.0.1:8000').replace(/\/$/,'');export const url=(p:string)=>B+p;
+async function req(p:string,init?:RequestInit){const r=await fetch(url(p),init);if(!r.ok){let m=`HTTP ${r.status}`;try{m=(await r.json()).detail||m}catch{}throw Error(m)}return r.json()}
+export const api={projects:()=>req('/api/projects'),create:(f:FormData)=>req('/api/projects',{method:'POST',body:f}),process:(id:string,prompt:string)=>{const f=new FormData();f.append('prompt',prompt);return req(`/api/projects/${id}/process`,{method:'POST',body:f})},job:(id:string)=>req(`/api/jobs/${id}`),summary:(id:string)=>req(`/api/projects/${id}/summary`)};
